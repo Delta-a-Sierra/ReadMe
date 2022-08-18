@@ -16,4 +16,5 @@ func init() {
 	TagCmd.AddCommand(listCmd)
 	TagCmd.AddCommand(addCmd)
 	TagCmd.AddCommand(removeCmd)
+	TagCmd.AddCommand(renameCmd)
 }
