@@ -8,9 +8,8 @@ import (
 	"os"
 
 	"github.com/Delta-a-Sierra/ReadMe/cmd"
+	"github.com/Delta-a-Sierra/ReadMe/data"
 )
-
-var appFolderPath string = "~/.readme"
 
 func createAppFolder(appFolderPath string) error {
 	if _, err := os.Stat(appFolderPath); os.IsNotExist(err) {
@@ -22,8 +21,22 @@ func createAppFolder(appFolderPath string) error {
 	return nil
 }
 
+func createAppFile(dataFilePath string) error {
+	if _, err := os.Stat(dataFilePath); os.IsNotExist(err) {
+		_, err := os.Create(dataFilePath)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func main() {
-	err := createAppFolder(appFolderPath)
+	err := createAppFolder(data.AppFolderPath)
+	if err != nil {
+		panic(err)
+	}
+	err = createAppFile(data.DataFilePath)
 	if err != nil {
 		panic(err)
 	}

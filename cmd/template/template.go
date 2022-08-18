@@ -5,6 +5,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var DataFilePath string
+
 var TemplateCmd = &cobra.Command{
 	Use:   "template",
 	Short: "used to perform actions on templates",

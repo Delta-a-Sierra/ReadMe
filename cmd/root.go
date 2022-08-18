@@ -7,6 +7,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// type template struct {
+// 	name string,
+// 	templatePath [] string,
+// 	tags []string,
+// 	lastUsed string,
+// 	useAmount int
+// }
+
 var rootCmd = &cobra.Command{
 	Use:   "ReadMe",
 	Short: "A simple command-line readme generator",
