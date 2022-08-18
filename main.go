@@ -14,7 +14,7 @@ var appFolderPath string = "~/.readme"
 
 func createAppFolder(appFolderPath string) error {
 	if _, err := os.Stat(appFolderPath); os.IsNotExist(err) {
-		err := os.MkdirAll("~/.readme", os.ModePerm)
+		err := os.MkdirAll(appFolderPath, os.ModePerm)
 		if err != nil {
 			return err
 		}
