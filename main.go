@@ -10,10 +10,10 @@ import (
 	"github.com/Delta-a-Sierra/ReadMe/cmd"
 )
 
-var AppFolderPath string = "~/.readme"
+var appFolderPath string = "~/.readme"
 
-func createAppFolder() error {
-	if _, err := os.Stat(AppFolderPath); os.IsNotExist(err) {
+func createAppFolder(appFolderPath string) error {
+	if _, err := os.Stat(appFolderPath); os.IsNotExist(err) {
 		err := os.MkdirAll("~/.readme", os.ModePerm)
 		if err != nil {
 			return err
@@ -23,7 +23,7 @@ func createAppFolder() error {
 }
 
 func main() {
-	err := createAppFolder()
+	err := createAppFolder(appFolderPath)
 	if err != nil {
 		panic(err)
 	}
