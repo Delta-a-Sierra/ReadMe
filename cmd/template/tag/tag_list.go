@@ -11,6 +11,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List available templates",
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		data.LoadData()
 		fmt.Printf("%v", strings.Join(data.Data.Tags, "\n"))

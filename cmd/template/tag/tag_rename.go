@@ -8,8 +8,9 @@ import (
 )
 
 var renameCmd = &cobra.Command{
-	Use:   "rename",
+	Use:   "rename <current_name> <desired_name>",
 	Short: "A brief description of your command",
+	Args:  cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 		data.LoadData()
 		renamed := false

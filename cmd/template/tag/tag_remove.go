@@ -8,8 +8,9 @@ import (
 )
 
 var removeCmd = &cobra.Command{
-	Use:   "remove",
+	Use:   "remove <tag>",
 	Short: "Remove a given template",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		data.LoadData()
 		removed := false

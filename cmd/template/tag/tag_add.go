@@ -16,8 +16,9 @@ func addTag(t *data.TemplateData, tag string) error {
 }
 
 var addCmd = &cobra.Command{
-	Use:   "add",
+	Use:   "add <tag>",
 	Short: "Adds a new template",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		err := data.LoadData()
 		if err != nil {
