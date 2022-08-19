@@ -2,7 +2,6 @@ package tag
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/Delta-a-Sierra/ReadMe/data"
@@ -14,7 +13,6 @@ var listCmd = &cobra.Command{
 	Short: "List available templates",
 	Run: func(cmd *cobra.Command, args []string) {
 		data.LoadData()
-		sort.Strings(data.Data.Tags)
 		fmt.Printf("%v", strings.Join(data.Data.Tags, "\n"))
 		println()
 	},

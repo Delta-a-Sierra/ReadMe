@@ -3,6 +3,7 @@ package tag
 import (
 	"errors"
 	"fmt"
+	"sort"
 
 	"github.com/Delta-a-Sierra/ReadMe/data"
 	"github.com/spf13/cobra"
@@ -24,6 +25,7 @@ var addCmd = &cobra.Command{
 		}
 		fmt.Println("add tag called")
 		addTag(&data.Data, args[0])
+		sort.Strings(data.Data.Tags)
 		data.WriteData()
 	},
 }
