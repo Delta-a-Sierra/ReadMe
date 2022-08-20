@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"time"
 )
 
 var (
@@ -14,14 +15,14 @@ var (
 
 type TemplateData struct {
 	Tags          []string
-	TemplatesInfo []templateInfo
+	TemplatesInfo []TemplateInfo
 }
 
-type templateInfo struct {
+type TemplateInfo struct {
 	Name       string
 	Filepath   string
 	Tags       []string
-	LastUsed   string
+	LastUsed   time.Time
 	UsageCount int
 }
 

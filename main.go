@@ -31,8 +31,22 @@ func createAppFile(dataFilePath string) error {
 	return nil
 }
 
+func createTemplateFolder(appFolderPath string) error {
+	if _, err := os.Stat(appFolderPath + "/templates"); os.IsNotExist(err) {
+		err := os.MkdirAll(appFolderPath+"/templates", os.ModePerm)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func main() {
 	err := createAppFolder(data.AppFolderPath)
+	if err != nil {
+		panic(err)
+	}
+	err = createTemplateFolder(data.AppFolderPath)
 	if err != nil {
 		panic(err)
 	}

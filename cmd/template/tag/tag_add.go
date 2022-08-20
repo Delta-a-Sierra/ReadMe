@@ -11,7 +11,6 @@ import (
 
 func addTag(t *data.TemplateData, tag string) error {
 	t.Tags = append(t.Tags, tag)
-	fmt.Println(t)
 	return errors.New("sutten")
 }
 
