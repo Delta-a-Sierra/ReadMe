@@ -11,15 +11,15 @@ A command line tool that's used to generate readmes from templates as well as cr
 ### template
 
 - use
-  - accepts one positonal agrument the template name
+  - accepts one positional argument the template name
 - add
-  - accepts postional agruments the desired name of the template and the file location.
-  - tag flag can be used to supply list of tags to associate with the template
+  accepts positional arguments the desired name of the template and the file location.
+  - tag flag can be used to supply a list of tags to associate with the template
 - remove
-  - accepts one agrument the template name
+  accepts one argument the template name
 - list
   - no agruments lists all templates sorted a-z.
-  - tag flag can be used to list only templates of certain tag.
+  - tag flag can be used to list only templates of certain tags.
   - sort tag can be used to sort results in alternate ways, most-used.
 
 ### template tags
@@ -27,7 +27,7 @@ A command line tool that's used to generate readmes from templates as well as cr
 - list
 - add
 - remove
-  - one postional agrument the tag name, displays number of templates attached to it. before confirming delete.
+  one positional argument of the tag name and then displays number of templates attached to it. before confirming delete.
 - rename
   - two postional arguments current tag name and desired name, no duplicate tags
 
@@ -43,4 +43,4 @@ A command line tool that's used to generate readmes from templates as well as cr
 - add
   - default to interactive mode
 - remove
-  - takes one argument a positional argument. -->
+  - takes one argument as a positional argument. -->

@@ -8,7 +8,7 @@ import (
 var removeCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "Remove a given template",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		data.LoadData()
 		for index, template := range data.Data.TemplatesInfo {
 			if template.Name == args[0] {
@@ -18,9 +18,6 @@ var removeCmd = &cobra.Command{
 			}
 		}
 		data.WriteData()
+		return nil
 	},
-}
-
-func init() {
-
 }

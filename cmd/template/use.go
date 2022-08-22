@@ -1,6 +1,7 @@
 package template
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -12,7 +13,7 @@ var useCmd = &cobra.Command{
 	Use:   "use",
 	Short: "Use a given template",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		data.LoadData()
 
 		var path string
@@ -22,19 +23,15 @@ var useCmd = &cobra.Command{
 				path = template.Filepath
 				templateBytes, _ := os.ReadFile(path)
 				ex, err := os.Executable()
-				exPath := filepath.Dir(ex) + "/" + template.Name + ".md"
+				exPath := fmt.Sprintf("%s/%s.md", filepath.Dir(ex), template.Name)
 
 				err = os.WriteFile(exPath, templateBytes, os.ModePerm)
 				if err != nil {
-					panic(err)
+					return fmt.Errorf("unable to copy template file: '%s' to app folder", template.Name)
 				}
-				return
+				return nil
 			}
 		}
-
+		return nil
 	},
-}
-
-func init() {
-
 }

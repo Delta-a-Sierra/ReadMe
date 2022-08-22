@@ -23,17 +23,14 @@ var addCmd = &cobra.Command{
 	Use:   "add <template_name> <file_path>",
 	Short: "Adds a new template",
 	Args:  cobra.ExactArgs(2),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		data.LoadData()
-
 		if _, err := os.Stat(args[1]); err != nil {
-			println("the given filepath is not valid")
-			return
+			return fmt.Errorf("the given filepath: '%s' is not valid", args[1])
 		}
 
 		if existingTemplateFound(args[0]) {
-			fmt.Printf("template with name %s already exists", args[0])
-			return
+			return fmt.Errorf("template with name: '%s' already exists", args[0])
 		}
 
 		newPath := data.AppFolderPath + "/templates/" + args[0] + ".md"
@@ -41,15 +38,12 @@ var addCmd = &cobra.Command{
 		templateBytes, _ := os.ReadFile(args[1])
 		err := os.WriteFile(newPath, templateBytes, os.ModePerm)
 		if err != nil {
-			panic(err)
+			return err
 		}
 
 		template := data.TemplateInfo{Name: args[0], Filepath: newPath, Tags: []string{}, LastUsed: time.Time{}, UsageCount: 0}
 		data.Data.TemplatesInfo = append(data.Data.TemplatesInfo, template)
 		data.WriteData()
+		return nil
 	},
-}
-
-func init() {
-
 }

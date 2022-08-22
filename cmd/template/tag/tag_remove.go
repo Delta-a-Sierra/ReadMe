@@ -11,8 +11,10 @@ var removeCmd = &cobra.Command{
 	Use:   "remove <tag>",
 	Short: "Remove a given template",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
-		data.LoadData()
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if err := data.LoadData(); err != nil {
+			return err
+		}
 		removed := false
 		for i, v := range data.Data.Tags {
 			if v == args[0] {
@@ -25,9 +27,9 @@ var removeCmd = &cobra.Command{
 		if removed {
 			fmt.Printf("%s removed from tags lists", args[0])
 			data.WriteData()
-			return
+			return nil
 		}
-		fmt.Printf("%s not found in tags lists", args[0])
+		return fmt.Errorf("%s not found in tags lists", args[0])
 	},
 }
 

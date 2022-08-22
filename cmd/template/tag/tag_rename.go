@@ -11,8 +11,10 @@ var renameCmd = &cobra.Command{
 	Use:   "rename <current_name> <desired_name>",
 	Short: "A brief description of your command",
 	Args:  cobra.ExactArgs(2),
-	Run: func(cmd *cobra.Command, args []string) {
-		data.LoadData()
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if err := data.LoadData(); err != nil {
+			return err
+		}
 		renamed := false
 		for i, v := range data.Data.Tags {
 			if v == args[0] {
@@ -24,9 +26,9 @@ var renameCmd = &cobra.Command{
 		if renamed {
 			fmt.Printf("Successfuly renamed %s to %s", args[0], args[1])
 			data.WriteData()
-			return
+			return nil
 		}
-		fmt.Printf("No tag named %s found.", args[0])
+		return fmt.Errorf("No tag named %s found.", args[0])
 	},
 }
 
