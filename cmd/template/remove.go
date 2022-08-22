@@ -9,7 +9,9 @@ var removeCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "Remove a given template",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		data.LoadData()
+		if err := data.LoadData(); err != nil {
+			return err
+		}
 		for index, template := range data.Data.TemplatesInfo {
 			if template.Name == args[0] {
 				slice1 := data.Data.TemplatesInfo[:index]
@@ -17,7 +19,9 @@ var removeCmd = &cobra.Command{
 				data.Data.TemplatesInfo = append(slice1, slice2...)
 			}
 		}
-		data.WriteData()
+		if err := data.WriteData(); err != nil {
+			return err
+		}
 		return nil
 	},
 }

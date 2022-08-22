@@ -2,6 +2,8 @@ package data
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"time"
@@ -30,18 +32,24 @@ func LoadData() error {
 
 	file, err := ioutil.ReadFile(DataFilePath)
 	if err != nil {
-		return err
+		return fmt.Errorf("unable read datafile: %s", err)
 	}
 
 	err = json.Unmarshal([]byte(file), &Data)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed unmarshalling datafiles json's: %s", err)
 	}
 
 	return nil
 }
 
-func WriteData() {
-	dataAsBytes, _ := json.MarshalIndent(Data, "", " ")
-	ioutil.WriteFile(DataFilePath, dataAsBytes, 0644)
+func WriteData() error {
+	dataAsBytes, err := json.MarshalIndent(Data, "", " ")
+	if err != nil {
+		return errors.New("failed marshalling data back to json")
+	}
+	if err := ioutil.WriteFile(DataFilePath, dataAsBytes, 0644); err != nil {
+		return errors.New("failed writing json data back to data file")
+	}
+	return nil
 }

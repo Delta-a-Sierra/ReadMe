@@ -24,7 +24,9 @@ var addCmd = &cobra.Command{
 	Short: "Adds a new template",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		data.LoadData()
+		if err := data.LoadData(); err != nil {
+			return err
+		}
 		if _, err := os.Stat(args[1]); err != nil {
 			return fmt.Errorf("the given filepath: '%s' is not valid", args[1])
 		}
@@ -43,7 +45,9 @@ var addCmd = &cobra.Command{
 
 		template := data.TemplateInfo{Name: args[0], Filepath: newPath, Tags: []string{}, LastUsed: time.Time{}, UsageCount: 0}
 		data.Data.TemplatesInfo = append(data.Data.TemplatesInfo, template)
-		data.WriteData()
+		if err := data.WriteData(); err != nil {
+			return err
+		}
 		return nil
 	},
 }

@@ -26,7 +26,9 @@ var removeCmd = &cobra.Command{
 		}
 		if removed {
 			fmt.Printf("%s removed from tags lists", args[0])
-			data.WriteData()
+			if err := data.WriteData(); err != nil {
+				return err
+			}
 			return nil
 		}
 		return fmt.Errorf("%s not found in tags lists", args[0])

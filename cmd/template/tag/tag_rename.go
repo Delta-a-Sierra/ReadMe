@@ -25,7 +25,9 @@ var renameCmd = &cobra.Command{
 
 		if renamed {
 			fmt.Printf("Successfuly renamed %s to %s", args[0], args[1])
-			data.WriteData()
+			if err := data.WriteData(); err != nil {
+				return err
+			}
 			return nil
 		}
 		return fmt.Errorf("No tag named %s found.", args[0])

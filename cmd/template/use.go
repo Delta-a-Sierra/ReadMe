@@ -14,15 +14,18 @@ var useCmd = &cobra.Command{
 	Short: "Use a given template",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		data.LoadData()
-
+		if err := data.LoadData(); err != nil {
+			return err
+		}
 		var path string
-
 		for _, template := range data.Data.TemplatesInfo {
 			if template.Name == args[0] {
 				path = template.Filepath
 				templateBytes, _ := os.ReadFile(path)
 				ex, err := os.Executable()
+				if err != nil {
+					return err
+				}
 				exPath := fmt.Sprintf("%s/%s.md", filepath.Dir(ex), template.Name)
 
 				err = os.WriteFile(exPath, templateBytes, os.ModePerm)

@@ -18,7 +18,9 @@ var addCmd = &cobra.Command{
 		}
 		data.Data.Tags = append(data.Data.Tags, args[0])
 		sort.Strings(data.Data.Tags)
-		data.WriteData()
+		if err := data.WriteData(); err != nil {
+			return err
+		}
 		return nil
 	},
 }
