@@ -32,3 +32,6 @@ var removeCmd = &cobra.Command{
 		return fmt.Errorf("unable to find template: '%s'", args[0])
 	},
 }
+
+func init() {
+}

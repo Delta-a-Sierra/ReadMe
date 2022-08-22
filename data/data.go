@@ -25,6 +25,7 @@ type TemplateInfo struct {
 	Filepath   string
 	Tags       []string
 	LastUsed   time.Time
+	Created    time.Time
 	UsageCount int
 }
 

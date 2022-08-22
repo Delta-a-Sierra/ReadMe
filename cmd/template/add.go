@@ -43,7 +43,7 @@ var addCmd = &cobra.Command{
 			return err
 		}
 
-		template := data.TemplateInfo{Name: args[0], Filepath: newPath, Tags: []string{}, LastUsed: time.Time{}, UsageCount: 0}
+		template := data.TemplateInfo{Name: args[0], Filepath: newPath, Tags: []string{}, LastUsed: time.Time{}, Created: time.Now(), UsageCount: 0}
 		data.Data.TemplatesInfo = append(data.Data.TemplatesInfo, template)
 		if err := data.WriteData(); err != nil {
 			return err
