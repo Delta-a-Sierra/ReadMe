@@ -8,9 +8,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var sort string
-
-var sortOptions = []string{"recent", "usage", "age-a", "age-d"}
+var (
+	sort        string
+	sortOptions = []string{"recent", "usage", "age-a", "age-d"}
+)
 
 var listCmd = &cobra.Command{
 	Use:   "list",
@@ -30,8 +31,7 @@ var listCmd = &cobra.Command{
 		default:
 			return fmt.Errorf("the sort option '%s' does no exist please use one of the following %v", sort, strings.Join(sortOptions, " | "))
 		}
-		fmt.Println("\nTemplates")
-		fmt.Println("----------")
+		fmt.Println("\nTemplates\n----------")
 		for _, template := range data.Data.TemplatesInfo {
 			fmt.Println(template.Name)
 		}

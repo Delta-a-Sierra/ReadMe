@@ -16,8 +16,7 @@ var useCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		for index, template := range data.Data.TemplatesInfo {
 			if template.Name == args[0] {
-				path := template.Filepath
-				templateBytes, err := os.ReadFile(path)
+				templateBytes, err := os.ReadFile(template.Filepath)
 				if err != nil {
 					return fmt.Errorf("unable to read file at path '%s'", template.Filepath)
 				}
@@ -26,11 +25,11 @@ var useCmd = &cobra.Command{
 					return err
 				}
 				exPath := fmt.Sprintf("%s/%s.md", filepath.Dir(ex), template.Name)
-				template.UsageCount++
 				err = os.WriteFile(exPath, templateBytes, os.ModePerm)
 				if err != nil {
 					return fmt.Errorf("unable to copy template file: '%s' to app folder", template.Name)
 				}
+				template.UsageCount++
 				data.Data.TemplatesInfo[index] = template
 				return nil
 			}

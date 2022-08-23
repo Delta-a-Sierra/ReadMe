@@ -17,7 +17,3 @@ var addCmd = &cobra.Command{
 		return nil
 	},
 }
-
-func init() {
-
-}

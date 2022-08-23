@@ -13,11 +13,8 @@ var listCmd = &cobra.Command{
 	Short: "List available templates",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Printf("%v", strings.Join(data.Data.Tags, "\n"))
-		println()
+		fmt.Println("\nTags\n----------")
+		fmt.Printf("%v\n", strings.Join(data.Data.Tags, "\n"))
 		return nil
 	},
-}
-
-func init() {
 }

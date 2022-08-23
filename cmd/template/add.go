@@ -28,10 +28,10 @@ var addCmd = &cobra.Command{
 		}
 
 		if existingTemplateFound(args[0]) {
-			return fmt.Errorf("template with name: '%s' already exists", args[0])
+			return fmt.Errorf("a template with the name: '%s' already exists", args[0])
 		}
 
-		newPath := data.AppFolderPath + "/templates/" + args[0] + ".md"
+		newPath := fmt.Sprintf("%s/templates/%s.md", data.AppFolderPath, args[0])
 
 		templateBytes, _ := os.ReadFile(args[1])
 		err := os.WriteFile(newPath, templateBytes, os.ModePerm)
