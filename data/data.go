@@ -20,6 +20,7 @@ type TemplateData struct {
 	TemplatesInfo []TemplateInfo
 }
 
+// update sort functions to be a higher order function that takes a list field and func(l, f)bool{}
 func (t TemplateData) SortUsage(index ...int) {
 	if len(index) == 0 {
 		index = []int{0}

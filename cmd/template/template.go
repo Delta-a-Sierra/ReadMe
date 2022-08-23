@@ -1,7 +1,6 @@
 package template
 
 import (
-	"github.com/Delta-a-Sierra/ReadMe/cmd/template/tag"
 	"github.com/spf13/cobra"
 )
 
@@ -20,5 +19,5 @@ func init() {
 	TemplateCmd.AddCommand(addCmd)
 	TemplateCmd.AddCommand(useCmd)
 	TemplateCmd.AddCommand(removeCmd)
-	TemplateCmd.AddCommand(tag.TagCmd)
+	TemplateCmd.AddCommand(tagCmd)
 }

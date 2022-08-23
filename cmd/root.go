@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"os"
 
+	"github.com/Delta-a-Sierra/ReadMe/cmd/tag"
 	"github.com/Delta-a-Sierra/ReadMe/cmd/template"
 	"github.com/Delta-a-Sierra/ReadMe/data"
 	"github.com/spf13/cobra"
@@ -19,7 +21,9 @@ func Execute() {
 	if err := data.LoadData(); err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println()
 	err := rootCmd.Execute()
+
 	if err != nil {
 		os.Exit(1)
 	}
@@ -30,5 +34,6 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(template.TemplateCmd)
+	rootCmd.AddCommand(tag.TagCmd)
 
 }
