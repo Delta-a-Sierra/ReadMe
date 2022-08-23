@@ -45,7 +45,7 @@ func (t TemplateData) SortRecent(index ...int) {
 		return
 	}
 	key := t.TemplatesInfo[index[0]+1]
-	if key.LastUsed.Before(t.TemplatesInfo[index[0]].LastUsed) {
+	if key.LastUsed.After(t.TemplatesInfo[index[0]].LastUsed) {
 		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
 		if index[0] >= 1 {
 			t.SortRecent(index[0] - 1)
