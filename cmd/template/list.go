@@ -43,6 +43,5 @@ var listCmd = &cobra.Command{
 }
 
 func init() {
-	// fmt.Println(insertSort(dummyList, 0))
 	listCmd.Flags().StringVarP(&sort, "sort", "s", "", fmt.Sprintf("used to sort the list of templates returned e.g -s %v", strings.Join(sortOptions, " | ")))
 }

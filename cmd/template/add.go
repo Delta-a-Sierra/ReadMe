@@ -18,7 +18,6 @@ func existingTemplateFound(name string) bool {
 	return false
 }
 
-// addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add <template_name> <file_path>",
 	Short: "Adds a new template",
