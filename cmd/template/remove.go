@@ -24,9 +24,6 @@ var removeCmd = &cobra.Command{
 			}
 		}
 		if found {
-			if err := data.WriteData(); err != nil {
-				return err
-			}
 			return nil
 		}
 		return fmt.Errorf("unable to find template: '%s'", args[0])

@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"log"
 	"os"
 
 	"github.com/Delta-a-Sierra/ReadMe/cmd/template"
+	"github.com/Delta-a-Sierra/ReadMe/data"
 	"github.com/spf13/cobra"
 )
 
@@ -14,9 +16,15 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
+	if err := data.LoadData(); err != nil {
+		log.Fatal(err)
+	}
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
+	}
+	if err := data.WriteData(); err != nil {
+		log.Fatal(err)
 	}
 }
 

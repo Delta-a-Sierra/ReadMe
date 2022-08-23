@@ -12,15 +12,8 @@ var addCmd = &cobra.Command{
 	Short: "Adds a new template",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := data.LoadData()
-		if err != nil {
-			return err
-		}
 		data.Data.Tags = append(data.Data.Tags, args[0])
 		sort.Strings(data.Data.Tags)
-		if err := data.WriteData(); err != nil {
-			return err
-		}
 		return nil
 	},
 }

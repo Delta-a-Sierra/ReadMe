@@ -14,9 +14,6 @@ var useCmd = &cobra.Command{
 	Short: "Use a given template",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if err := data.LoadData(); err != nil {
-			return err
-		}
 		for index, template := range data.Data.TemplatesInfo {
 			if template.Name == args[0] {
 				path := template.Filepath
@@ -35,9 +32,6 @@ var useCmd = &cobra.Command{
 					return fmt.Errorf("unable to copy template file: '%s' to app folder", template.Name)
 				}
 				data.Data.TemplatesInfo[index] = template
-				if err := data.WriteData(); err != nil {
-					return err
-				}
 				return nil
 			}
 		}

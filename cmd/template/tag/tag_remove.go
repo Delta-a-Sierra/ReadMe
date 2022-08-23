@@ -12,9 +12,6 @@ var removeCmd = &cobra.Command{
 	Short: "Remove a given template",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if err := data.LoadData(); err != nil {
-			return err
-		}
 		removed := false
 		for i, v := range data.Data.Tags {
 			if v == args[0] {

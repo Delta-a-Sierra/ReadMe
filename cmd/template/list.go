@@ -17,9 +17,6 @@ var listCmd = &cobra.Command{
 	Short: "List available templates",
 	Args:  cobra.ExactArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if err := data.LoadData(); err != nil {
-			return err
-		}
 		switch sort {
 		case "":
 		case "recent":

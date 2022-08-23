@@ -13,9 +13,6 @@ var listCmd = &cobra.Command{
 	Short: "List available templates",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if err := data.LoadData(); err != nil {
-			return err
-		}
 		fmt.Printf("%v", strings.Join(data.Data.Tags, "\n"))
 		println()
 		return nil
