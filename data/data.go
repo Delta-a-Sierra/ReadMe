@@ -20,60 +20,72 @@ type TemplateData struct {
 	TemplatesInfo []TemplateInfo
 }
 
-func (t TemplateData) SortUsage(index int) {
-	if index >= len(t.TemplatesInfo)-1 {
+func (t TemplateData) SortUsage(index ...int) {
+	if len(index) == 0 {
+		index = []int{0}
+	}
+	if index[0] >= len(t.TemplatesInfo)-1 {
 		return
 	}
-	key := t.TemplatesInfo[index+1]
-	if key.UsageCount > t.TemplatesInfo[index].UsageCount {
-		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
-		if index >= 1 {
-			t.SortUsage(index - 1)
+	key := t.TemplatesInfo[index[0]+1]
+	if key.UsageCount > t.TemplatesInfo[index[0]].UsageCount {
+		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
+		if index[0] >= 1 {
+			t.SortUsage(index[0] - 1)
 		}
 	}
-	t.SortUsage(index + 1)
+	t.SortUsage(index[0] + 1)
 }
 
-func (t TemplateData) SortRecent(index int) {
-	if index >= len(t.TemplatesInfo)-1 {
+func (t TemplateData) SortRecent(index ...int) {
+	if len(index) == 0 {
+		index = []int{0}
+	}
+	if index[0] >= len(t.TemplatesInfo)-1 {
 		return
 	}
-	key := t.TemplatesInfo[index+1]
-	if key.LastUsed.Before(t.TemplatesInfo[index].LastUsed) {
-		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
-		if index >= 1 {
-			t.SortRecent(index - 1)
+	key := t.TemplatesInfo[index[0]+1]
+	if key.LastUsed.Before(t.TemplatesInfo[index[0]].LastUsed) {
+		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
+		if index[0] >= 1 {
+			t.SortRecent(index[0] - 1)
 		}
 	}
-	t.SortRecent(index + 1)
+	t.SortRecent(index[0] + 1)
 }
 
-func (t TemplateData) SortAgeAcsending(index int) {
-	if index >= len(t.TemplatesInfo)-1 {
+func (t TemplateData) SortAgeAcsending(index ...int) {
+	if len(index) == 0 {
+		index = []int{0}
+	}
+	if index[0] >= len(t.TemplatesInfo)-1 {
 		return
 	}
-	key := t.TemplatesInfo[index+1]
-	if key.Created.Before(t.TemplatesInfo[index].Created) {
-		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
-		if index >= 1 {
-			t.SortAgeAcsending(index - 1)
+	key := t.TemplatesInfo[index[0]+1]
+	if key.Created.Before(t.TemplatesInfo[index[0]].Created) {
+		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
+		if index[0] >= 1 {
+			t.SortAgeAcsending(index[0] - 1)
 		}
 	}
-	t.SortAgeAcsending(index + 1)
+	t.SortAgeAcsending(index[0] + 1)
 }
 
-func (t TemplateData) SortAgeDescending(index int) {
-	if index >= len(t.TemplatesInfo)-1 {
+func (t TemplateData) SortAgeDescending(index ...int) {
+	if len(index) == 0 {
+		index = []int{0}
+	}
+	if index[0] >= len(t.TemplatesInfo)-1 {
 		return
 	}
-	key := t.TemplatesInfo[index+1]
-	if key.Created.After(t.TemplatesInfo[index].Created) {
-		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
-		if index >= 1 {
-			t.SortAgeDescending(index - 1)
+	key := t.TemplatesInfo[index[0]+1]
+	if key.Created.After(t.TemplatesInfo[index[0]].Created) {
+		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
+		if index[0] >= 1 {
+			t.SortAgeDescending(index[0] - 1)
 		}
 	}
-	t.SortAgeDescending(index + 1)
+	t.SortAgeDescending(index[0] + 1)
 }
 
 type TemplateInfo struct {

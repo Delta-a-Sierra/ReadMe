@@ -23,13 +23,13 @@ var listCmd = &cobra.Command{
 		switch sort {
 		case "":
 		case "recent":
-			data.Data.SortRecent(0)
+			data.Data.SortRecent()
 		case "usage":
-			data.Data.SortUsage(0)
+			data.Data.SortUsage()
 		case "age-a":
-			data.Data.SortAgeAcsending(0)
+			data.Data.SortAgeAcsending()
 		case "age-d":
-			data.Data.SortAgeDescending(0)
+			data.Data.SortAgeDescending()
 		default:
 			return fmt.Errorf("the sort option '%s' does no exist please use one of the following %v", sort, strings.Join(sortOptions, " | "))
 		}
