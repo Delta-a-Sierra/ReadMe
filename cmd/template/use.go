@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/Delta-a-Sierra/ReadMe/data"
 	"github.com/spf13/cobra"
@@ -30,6 +31,7 @@ var useCmd = &cobra.Command{
 					return fmt.Errorf("unable to copy template file: '%s' to app folder", template.Name)
 				}
 				template.UsageCount++
+				template.LastUsed = time.Now()
 				data.Data.TemplatesInfo[index] = template
 				return nil
 			}
