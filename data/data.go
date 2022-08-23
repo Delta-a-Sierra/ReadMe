@@ -20,6 +20,62 @@ type TemplateData struct {
 	TemplatesInfo []TemplateInfo
 }
 
+func (t TemplateData) SortUsage(index int) {
+	if index >= len(t.TemplatesInfo)-1 {
+		return
+	}
+	key := t.TemplatesInfo[index+1]
+	if key.UsageCount > t.TemplatesInfo[index].UsageCount {
+		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
+		if index >= 1 {
+			t.SortUsage(index - 1)
+		}
+	}
+	t.SortUsage(index + 1)
+}
+
+func (t TemplateData) SortRecent(index int) {
+	if index >= len(t.TemplatesInfo)-1 {
+		return
+	}
+	key := t.TemplatesInfo[index+1]
+	if key.LastUsed.Before(t.TemplatesInfo[index].LastUsed) {
+		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
+		if index >= 1 {
+			t.SortRecent(index - 1)
+		}
+	}
+	t.SortRecent(index + 1)
+}
+
+func (t TemplateData) SortAgeAcsending(index int) {
+	if index >= len(t.TemplatesInfo)-1 {
+		return
+	}
+	key := t.TemplatesInfo[index+1]
+	if key.Created.Before(t.TemplatesInfo[index].Created) {
+		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
+		if index >= 1 {
+			t.SortAgeAcsending(index - 1)
+		}
+	}
+	t.SortAgeAcsending(index + 1)
+}
+
+func (t TemplateData) SortAgeDescending(index int) {
+	if index >= len(t.TemplatesInfo)-1 {
+		return
+	}
+	key := t.TemplatesInfo[index+1]
+	if key.Created.After(t.TemplatesInfo[index].Created) {
+		t.TemplatesInfo[index+1], t.TemplatesInfo[index] = t.TemplatesInfo[index], key
+		if index >= 1 {
+			t.SortAgeDescending(index - 1)
+		}
+	}
+	t.SortAgeDescending(index + 1)
+}
+
 type TemplateInfo struct {
 	Name       string
 	Filepath   string
