@@ -13,9 +13,7 @@ var removeCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		for index, template := range data.Data.TemplatesInfo {
 			if template.Name == args[0] {
-				slice1 := data.Data.TemplatesInfo[:index]
-				slice2 := data.Data.TemplatesInfo[index+1:]
-				data.Data.TemplatesInfo = append(slice1, slice2...)
+				data.Data.TemplatesInfo = append(data.Data.TemplatesInfo[:index], data.Data.TemplatesInfo[index+1:]...)
 				return nil
 			}
 		}
