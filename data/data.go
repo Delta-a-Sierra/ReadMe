@@ -98,17 +98,14 @@ type TemplateInfo struct {
 }
 
 func LoadData() error {
-
 	file, err := ioutil.ReadFile(DataFilePath)
 	if err != nil {
 		return fmt.Errorf("unable read datafile: %s", err)
 	}
-
 	err = json.Unmarshal([]byte(file), &Data)
 	if err != nil {
 		return fmt.Errorf("failed unmarshalling datafiles json's: %s", err)
 	}
-
 	return nil
 }
 
