@@ -15,80 +15,6 @@ var (
 	Data          TemplateData
 )
 
-type TemplateData struct {
-	Tags          []string
-	TemplatesInfo []TemplateInfo
-}
-
-// update sort functions to be a higher order function that takes a list field and func(l, f)bool{}
-func (t TemplateData) SortUsage(index ...int) {
-	if len(index) == 0 {
-		index = []int{0}
-	}
-	if index[0] >= len(t.TemplatesInfo)-1 {
-		return
-	}
-	key := t.TemplatesInfo[index[0]+1]
-	if key.UsageCount > t.TemplatesInfo[index[0]].UsageCount {
-		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
-		if index[0] >= 1 {
-			t.SortUsage(index[0] - 1)
-		}
-	}
-	t.SortUsage(index[0] + 1)
-}
-
-func (t TemplateData) SortRecent(index ...int) {
-	if len(index) == 0 {
-		index = []int{0}
-	}
-	if index[0] >= len(t.TemplatesInfo)-1 {
-		return
-	}
-	key := t.TemplatesInfo[index[0]+1]
-	if key.LastUsed.After(t.TemplatesInfo[index[0]].LastUsed) {
-		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
-		if index[0] >= 1 {
-			t.SortRecent(index[0] - 1)
-		}
-	}
-	t.SortRecent(index[0] + 1)
-}
-
-func (t TemplateData) SortAgeAcsending(index ...int) {
-	if len(index) == 0 {
-		index = []int{0}
-	}
-	if index[0] >= len(t.TemplatesInfo)-1 {
-		return
-	}
-	key := t.TemplatesInfo[index[0]+1]
-	if key.Created.Before(t.TemplatesInfo[index[0]].Created) {
-		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
-		if index[0] >= 1 {
-			t.SortAgeAcsending(index[0] - 1)
-		}
-	}
-	t.SortAgeAcsending(index[0] + 1)
-}
-
-func (t TemplateData) SortAgeDescending(index ...int) {
-	if len(index) == 0 {
-		index = []int{0}
-	}
-	if index[0] >= len(t.TemplatesInfo)-1 {
-		return
-	}
-	key := t.TemplatesInfo[index[0]+1]
-	if key.Created.After(t.TemplatesInfo[index[0]].Created) {
-		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
-		if index[0] >= 1 {
-			t.SortAgeDescending(index[0] - 1)
-		}
-	}
-	t.SortAgeDescending(index[0] + 1)
-}
-
 type TemplateInfo struct {
 	Name       string
 	Filepath   string
@@ -96,6 +22,75 @@ type TemplateInfo struct {
 	LastUsed   time.Time
 	Created    time.Time
 	UsageCount int
+}
+type TemplateData struct {
+	Tags          []string
+	TemplatesInfo []TemplateInfo
+}
+
+func (t TemplateData) sortTemplates(sortAlg func(t1, t2 TemplateInfo) bool, index ...int) {
+	if len(index) == 0 {
+		index = []int{0}
+	}
+	if index[0] >= len(t.TemplatesInfo)-1 {
+		fmt.Println("final recusion")
+		return
+	}
+	key := t.TemplatesInfo[index[0]+1]
+	if sortAlg(t.TemplatesInfo[index[0]], key) {
+		fmt.Println("sort alg true")
+		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
+		if index[0] >= 1 {
+			fmt.Println("recusion down", index[0])
+			t.sortTemplates(sortAlg, index[0]-1)
+		}
+	}
+	fmt.Println("recusion up", index[0])
+	t.sortTemplates(sortAlg, index[0]+1)
+}
+
+func (t TemplateData) SortRecent() {
+	t.sortTemplates(
+		func(t1, t2 TemplateInfo) bool {
+			if t1.LastUsed.Before(t2.LastUsed) {
+				return true
+			}
+			return false
+		},
+	)
+}
+
+func (t TemplateData) SortUsage() {
+	t.sortTemplates(
+		func(t1, t2 TemplateInfo) bool {
+			if t1.UsageCount < t2.UsageCount {
+				return true
+			}
+			return false
+		},
+	)
+}
+
+func (t TemplateData) SortAgeAcsending() {
+	t.sortTemplates(
+		func(t1, t2 TemplateInfo) bool {
+			if t1.Created.After(t2.Created) {
+				return true
+			}
+			return false
+		},
+	)
+}
+
+func (t TemplateData) SortAgeDescending() {
+	t.sortTemplates(
+		func(t1, t2 TemplateInfo) bool {
+			if t1.Created.Before(t2.Created) {
+				return true
+			}
+			return false
+		},
+	)
 }
 
 func LoadData() error {
