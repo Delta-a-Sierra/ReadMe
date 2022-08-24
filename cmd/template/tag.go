@@ -35,17 +35,15 @@ var tagCmd = &cobra.Command{
 				return fmt.Errorf("Tag '%s' needs to be added to allowd list.\nPlease use command 'ReadMe tag add %s'\n", tag, tag)
 			}
 		}
-
-		for _, temp := range data.Data.TemplatesInfo {
-			if temp.Name == args[0] {
-				for _, tag := range tags {
-					if _, prs := temp.Tags[tag]; prs && remove {
-						delete(temp.Tags, tag)
-					}
-					if !remove {
-						temp.Tags[tag] = tag
-						data.Data.Tags[tag] = append(data.Data.Tags[tag], temp.Name)
-					}
+		temp, prs := data.Data.TemplatesInfo[args[0]]
+		if prs {
+			for _, tag := range tags {
+				if _, prs := temp.Tags[tag]; prs && remove {
+					delete(temp.Tags, tag)
+				}
+				if !remove {
+					temp.Tags[tag] = tag
+					data.Data.Tags[tag] = append(data.Data.Tags[tag], args[0])
 				}
 			}
 		}

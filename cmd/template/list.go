@@ -31,10 +31,8 @@ var listCmd = &cobra.Command{
 		default:
 			return fmt.Errorf("the sort option '%s' does no exist please use one of the following %v", sort, strings.Join(sortOptions, " | "))
 		}
-		fmt.Println("\nTemplates\n----------")
-		for _, template := range data.Data.TemplatesInfo {
-			fmt.Println(template.Name)
-		}
+		fmt.Println("Templates\n----------")
+		fmt.Printf("%v\n", strings.Join(data.Data.TemplateNames(), "\n"))
 		return nil
 	},
 }

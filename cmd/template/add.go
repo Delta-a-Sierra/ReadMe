@@ -9,15 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func existingTemplateFound(name string) bool {
-	for _, template := range data.Data.TemplatesInfo {
-		if template.Name == name {
-			return true
-		}
-	}
-	return false
-}
-
 var addCmd = &cobra.Command{
 	Use:   "add <template_name> <file_path>",
 	Short: "Adds a new template",
@@ -27,7 +18,7 @@ var addCmd = &cobra.Command{
 			return fmt.Errorf("the given filepath: '%s' is not valid", args[1])
 		}
 
-		if existingTemplateFound(args[0]) {
+		if _, prs := data.Data.TemplatesInfo[args[0]]; prs {
 			return fmt.Errorf("a template with the name: '%s' already exists", args[0])
 		}
 
@@ -39,8 +30,12 @@ var addCmd = &cobra.Command{
 			return err
 		}
 
-		template := data.TemplateInfo{Name: args[0], Filepath: newPath, Tags: make(map[string]string), LastUsed: time.Time{}, Created: time.Now(), UsageCount: 0}
-		data.Data.TemplatesInfo = append(data.Data.TemplatesInfo, template)
+		if data.Data.TemplatesInfo == nil {
+			data.Data.TemplatesInfo = map[string]data.TemplateInfo{}
+		}
+
+		template := data.TemplateInfo{Filepath: newPath, Tags: make(map[string]string), LastUsed: time.Time{}, Created: time.Now(), UsageCount: 0}
+		data.Data.TemplatesInfo[args[0]] = template
 		return nil
 	},
 }
