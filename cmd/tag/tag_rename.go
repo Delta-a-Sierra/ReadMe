@@ -12,13 +12,18 @@ var renameCmd = &cobra.Command{
 	Short: "A brief description of your command",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		for i, v := range data.Data.Tags {
-			if v == args[0] {
-				data.Data.Tags[i] = args[1]
-				return nil
+		oldTag := args[0]
+		newTag := args[1]
+
+		if _, prs := data.Data.Tags[oldTag]; prs {
+			if _, prs := data.Data.Tags[newTag]; prs {
+				return fmt.Errorf("unable to rename the tag %s to %s because %s already exists", oldTag, newTag, newTag)
 			}
+			data.Data.Tags[args[1]] = data.Data.Tags[args[0]]
+			delete(data.Data.Tags, args[0])
+			return nil
 		}
-		return fmt.Errorf("No tag named %s found.", args[0])
+		return fmt.Errorf("the tag %s does not exist", oldTag)
 	},
 }
 

@@ -18,13 +18,13 @@ var (
 type TemplateInfo struct {
 	Name       string
 	Filepath   string
-	Tags       []string
+	Tags       map[string]string
 	LastUsed   time.Time
 	Created    time.Time
 	UsageCount int
 }
 type TemplateData struct {
-	Tags          []string
+	Tags          map[string][]string
 	TemplatesInfo []TemplateInfo
 }
 
