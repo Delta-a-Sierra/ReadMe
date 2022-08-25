@@ -27,13 +27,11 @@ var listCmd = &cobra.Command{
 				temp := map[string]data.TemplateInfo{}
 				for _, t := range data.Data.Tags[filterArg[1]] {
 					temp[t] = data.Data.TemplatesInfo[t]
-
 				}
 				data.Data.TemplatesInfo = temp
 			default:
 				return fmt.Errorf("unable to filter templates based on %s", filterArg[0])
 			}
-
 		}
 
 		switch sort {
