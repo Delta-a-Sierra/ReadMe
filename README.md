@@ -6,7 +6,7 @@ A simple command-line readme generator.
 
 A command line tool that's used to generate readmes from templates as well as create custom templates.
 
-## Agruments
+## Arguments
 
 ### template
 

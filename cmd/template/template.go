@@ -20,4 +20,5 @@ func init() {
 	TemplateCmd.AddCommand(useCmd)
 	TemplateCmd.AddCommand(removeCmd)
 	TemplateCmd.AddCommand(tagCmd)
+	//TODO add a preview option?
 }

@@ -28,6 +28,7 @@ func createAppFile(dataFilePath string) error {
 			return err
 		}
 		data.Data = data.TemplateData{}
+		data.Data.TemplatesInfo = make(map[string]data.TemplateInfo)
 		if err := data.WriteData(); err != nil {
 			return err
 		}
@@ -58,6 +59,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 	cmd.Execute()
 }

@@ -23,7 +23,6 @@ var addCmd = &cobra.Command{
 		}
 
 		newPath := fmt.Sprintf("%s/templates/%s.md", data.AppFolderPath, args[0])
-
 		templateBytes, _ := os.ReadFile(args[1])
 		err := os.WriteFile(newPath, templateBytes, os.ModePerm)
 		if err != nil {

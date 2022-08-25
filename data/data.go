@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"sort"
 	"time"
 )
 
@@ -16,7 +17,6 @@ var (
 )
 
 type TemplateInfo struct {
-	Name       string
 	Filepath   string
 	Tags       map[string]string
 	LastUsed   time.Time
@@ -25,27 +25,46 @@ type TemplateInfo struct {
 }
 type TemplateData struct {
 	Tags          map[string][]string
-	TemplatesInfo []TemplateInfo
+	TemplatesInfo map[string]TemplateInfo
+	templateNames []string
+}
+
+func (t TemplateData) TemplateNames() []string {
+	return t.templateNames
+}
+
+func (t TemplateData) FillTemplateNames() {
+	if t.templateNames == nil {
+		for k := range t.TemplatesInfo {
+			t.templateNames = append(t.templateNames, k)
+		}
+		sort.Strings(t.templateNames)
+		Data.templateNames = t.templateNames
+	}
 }
 
 func (t TemplateData) sortTemplates(sortAlg func(t1, t2 TemplateInfo) bool, index ...int) {
 	if len(index) == 0 {
 		index = []int{0}
 	}
-	if index[0] >= len(t.TemplatesInfo)-1 {
-		fmt.Println("final recusion")
+	if t.templateNames == nil {
+		for k := range t.TemplatesInfo {
+			t.templateNames = append(t.templateNames, k)
+		}
+	}
+	if index[0] >= len(t.templateNames)-1 {
+		Data.templateNames = t.templateNames
 		return
 	}
-	key := t.TemplatesInfo[index[0]+1]
-	if sortAlg(t.TemplatesInfo[index[0]], key) {
-		fmt.Println("sort alg true")
-		t.TemplatesInfo[index[0]+1], t.TemplatesInfo[index[0]] = t.TemplatesInfo[index[0]], key
+
+	t1, t2 := t.TemplatesInfo[t.templateNames[index[0]]], t.TemplatesInfo[t.templateNames[index[0]+1]]
+	if sortAlg(t1, t2) {
+		t.templateNames[index[0]+1], t.templateNames[index[0]] =
+			t.templateNames[index[0]], t.templateNames[index[0]+1]
 		if index[0] >= 1 {
-			fmt.Println("recusion down", index[0])
 			t.sortTemplates(sortAlg, index[0]-1)
 		}
 	}
-	fmt.Println("recusion up", index[0])
 	t.sortTemplates(sortAlg, index[0]+1)
 }
 

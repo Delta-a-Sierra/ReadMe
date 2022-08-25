@@ -9,10 +9,10 @@ import (
 
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List available templates",
+	Short: "List available tags",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("\nTags\n----------")
+		fmt.Println("Tags\n----------")
 		for k := range data.Data.Tags {
 			println(k)
 		}

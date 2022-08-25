@@ -9,21 +9,24 @@ import (
 
 var renameCmd = &cobra.Command{
 	Use:   "rename <current_name> <desired_name>",
-	Short: "A brief description of your command",
+	Short: "lets you change the name of a tag to something else",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		oldTag := args[0]
-		newTag := args[1]
+		oldName, newName := args[0], args[1]
 
-		if _, prs := data.Data.Tags[oldTag]; prs {
-			if _, prs := data.Data.Tags[newTag]; prs {
-				return fmt.Errorf("unable to rename the tag %s to %s because %s already exists", oldTag, newTag, newTag)
+		if _, prs := data.Data.Tags[oldName]; prs {
+			if _, prs := data.Data.Tags[newName]; prs {
+				return fmt.Errorf("unable to rename the tag %s to %s because %s already exists", oldName, newName, newName)
 			}
-			data.Data.Tags[args[1]] = data.Data.Tags[args[0]]
-			delete(data.Data.Tags, args[0])
+			data.Data.Tags[newName] = data.Data.Tags[oldName]
+			for _, t := range data.Data.Tags[newName] {
+				data.Data.TemplatesInfo[t].Tags[newName] = data.Data.TemplatesInfo[t].Tags[oldName]
+				delete(data.Data.TemplatesInfo[t].Tags, oldName)
+			}
+			delete(data.Data.Tags, oldName)
 			return nil
 		}
-		return fmt.Errorf("the tag %s does not exist", oldTag)
+		return fmt.Errorf("the tag %s does not exist", oldName)
 	},
 }
 
