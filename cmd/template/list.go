@@ -14,6 +14,24 @@ var (
 	filter      string
 )
 
+func filterTemplates(tem *data.TemplateData, filterString string) error {
+	filterArg := strings.Split(filterString, "=")
+	switch filterArg[0] {
+	case "tag":
+		if _, prs := tem.Tags[filterArg[1]]; !prs {
+			return fmt.Errorf("no tag %s in tag collection", filterArg[1])
+		}
+		temp := map[string]data.TemplateInfo{}
+		for _, t := range tem.Tags[filterArg[1]] {
+			temp[t] = tem.TemplatesInfo[t]
+		}
+		(*tem).TemplatesInfo = temp
+	default:
+		return fmt.Errorf("unable to filter templates based on %s", filterArg[0])
+	}
+	return nil
+}
+
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List available templates",
@@ -21,16 +39,8 @@ var listCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		//TODO refactor so data doesnt need to be loaded again.
 		if filter != "" {
-			filterArg := strings.Split(filter, "=")
-			switch filterArg[0] {
-			case "tag":
-				temp := map[string]data.TemplateInfo{}
-				for _, t := range data.Data.Tags[filterArg[1]] {
-					temp[t] = data.Data.TemplatesInfo[t]
-				}
-				data.Data.TemplatesInfo = temp
-			default:
-				return fmt.Errorf("unable to filter templates based on %s", filterArg[0])
+			if err := filterTemplates(&data.Data, args[0]); err != nil {
+				return err
 			}
 		}
 
@@ -51,7 +61,7 @@ var listCmd = &cobra.Command{
 		fmt.Println("Templates\n----------")
 		fmt.Printf("%v\n", strings.Join(data.Data.TemplateNames(), "\n"))
 
-		if err := data.LoadData(); err != nil {
+		if err := data.Data.LoadData(data.DataFilePath); err != nil {
 			return err
 		}
 		return nil

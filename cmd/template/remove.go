@@ -7,14 +7,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func removeTemplates(templates map[string]data.TemplateInfo, templateName string) error {
+	if _, prs := templates[templateName]; prs {
+		delete(templates, templateName)
+		return nil
+	}
+	return fmt.Errorf("unable to find template: '%s'", templateName)
+}
+
 var removeCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "Remove a given template",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if _, prs := data.Data.TemplatesInfo[args[0]]; prs {
-			delete(data.Data.TemplatesInfo, args[0])
-			return nil
-		}
-		return fmt.Errorf("unable to find template: '%s'", args[0])
+		return removeTemplates(data.Data.TemplatesInfo, args[0])
 	},
 }
