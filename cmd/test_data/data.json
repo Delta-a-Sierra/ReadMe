@@ -1,0 +1,44 @@
+{
+  "Tags": {
+    "favourite": ["tem1", "alpha1"],
+    "todo": [],
+    "webapp": []
+  },
+  "TemplatesInfo": {
+    "alpha1": {
+      "Filepath": "/Users/dwayne/.readme/templates/alpha1.md",
+      "Tags": { "favourite": "favourite" },
+      "LastUsed": "0001-01-01T00:00:00Z",
+      "Created": "2022-08-26T13:38:48.156123+01:00",
+      "UsageCount": 0
+    },
+    "tem1": {
+      "Filepath": "/Users/dwayne/.readme/templates/tem1.md",
+      "Tags": { "favourite": "favourite" },
+      "LastUsed": "2022-08-26T13:38:32.51872+01:00",
+      "Created": "2022-08-26T13:38:11.038681+01:00",
+      "UsageCount": 1
+    },
+    "tem2": {
+      "Filepath": "/Users/dwayne/.readme/templates/tem2.md",
+      "Tags": {},
+      "LastUsed": "0001-01-01T00:00:00Z",
+      "Created": "2022-08-26T13:38:14.637226+01:00",
+      "UsageCount": 0
+    },
+    "tem3": {
+      "Filepath": "/Users/dwayne/.readme/templates/tem3.md",
+      "Tags": {},
+      "LastUsed": "0001-01-01T00:00:00Z",
+      "Created": "2022-08-26T13:38:18.38981+01:00",
+      "UsageCount": 0
+    },
+    "zalpha1": {
+      "Filepath": "/Users/dwayne/.readme/templates/zalpha1.md",
+      "Tags": {},
+      "LastUsed": "0001-01-01T00:00:00Z",
+      "Created": "2022-08-26T13:39:02.389883+01:00",
+      "UsageCount": 0
+    }
+  }
+}

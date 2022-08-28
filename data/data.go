@@ -112,12 +112,12 @@ func (t TemplateData) SortAgeDescending() {
 	)
 }
 
-func LoadData() error {
-	file, err := ioutil.ReadFile(DataFilePath)
+func (t *TemplateData) LoadData(filePath string) error {
+	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return fmt.Errorf("unable read datafile: %s", err)
 	}
-	err = json.Unmarshal([]byte(file), &Data)
+	err = json.Unmarshal([]byte(file), &t)
 	if err != nil {
 		return fmt.Errorf("failed unmarshalling datafiles json's: %s", err)
 	}

@@ -18,13 +18,11 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	if err := data.LoadData(); err != nil {
+	if err := data.Data.LoadData(data.DataFilePath); err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println()
-	err := rootCmd.Execute()
-
-	if err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 	if err := data.WriteData(); err != nil {
